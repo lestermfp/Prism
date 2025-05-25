@@ -82,7 +82,7 @@ Each line starting with -e signals a destination. **Remove all the destination l
 In order words, if you're not going to stream to a specific platform, simply remove the entire line involving it from the command above.
 
 ---
-Example of a command. As you can see, the lines that we didn't want to stream on are gone. 
+Example of a command: (As you can see, the lines that we didn't want to stream on are gone)
 ```
 docker run -d -p 1935:1935 --name prism \
   -e YOUTUBE_KEY="aBcD-1234-aBcD-1234-aBcD" \
