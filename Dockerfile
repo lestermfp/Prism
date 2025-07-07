@@ -7,6 +7,9 @@ RUN apt-get update && \
     apt-get install -y ca-certificates openssl libssl-dev stunnel4 gettext && \
     rm -rf /var/lib/apt/lists/*
 
+COPY --from=mwader/static-ffmpeg:7.1.1 /ffmpeg /usr/bin/
+COPY --from=mwader/static-ffmpeg:7.1.1 /ffprobe /usr/bin/
+
 RUN mkdir -p /tmp/build/nginx && \
     cd /tmp/build/nginx && \
     wget -O ${NGINX_VERSION}.tar.gz https://nginx.org/download/${NGINX_VERSION}.tar.gz && \
@@ -61,6 +64,9 @@ COPY stunnel/cloudflare.conf /etc/stunnel/conf.d/cloudflare.conf
 #Kick Stunnel Port 19353
 COPY stunnel/kick.conf /etc/stunnel/conf.d/kick.conf
 
+#Telegram Stunnel Port 19354
+COPY stunnel/telegram.conf /etc/stunnel/conf.d/telegram.conf
+
 #Youtube
 ENV YOUTUBE_URL rtmp://a.rtmp.youtube.com/live2/
 ENV YOUTUBE_KEY ""
@@ -100,6 +106,10 @@ ENV TROVO_KEY ""
 #Kick
 ENV KICK_URL rtmp://127.0.0.1:19353/kick/
 ENV KICK_KEY ""
+
+#Telegram
+ENV TELEGRAM_URL rtmp://127.0.0.1:19354/s/
+ENV TELEGRAM_KEY ""
 
 ENV DEBUG ""
 

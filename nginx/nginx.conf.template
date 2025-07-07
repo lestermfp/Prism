@@ -11,6 +11,7 @@ rtmp {
         application ${STREAM_APP} {
             live on;
             record off;
+            #telegramexec_push /usr/bin/ffmpeg -re -i rtmp://localhost/${DOLLAR}app/${DOLLAR}name -c copy -f flv ${TELEGRAM_URL}${TELEGRAM_KEY} 2>>/tmp/ffmpeg-${DOLLAR}name.log;
             #facebook
             #instagram
             #youtube

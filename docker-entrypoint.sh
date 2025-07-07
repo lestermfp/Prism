@@ -8,7 +8,7 @@ SERVER_IP=$(
     echo "unknown-ip"
 )
 
-export STREAM_APP=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c12)
+#export STREAM_APP=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c12)
 
 
 CONNECTION_INFO="# ======================================\n# ======================================\n# Your Stream Destination: rtmp://$SERVER_IP/$STREAM_APP\n# ======================================\n# Your Stream Key Does Not Matter\n# ======================================\n"
@@ -104,8 +104,14 @@ else
 	sed -i 's|#kick| |g' $NGINX_TEMPLATE
 fi
 
+if [ -n "${TELEGRAM_KEY}" ]; then
+	echo "Telegram activate."
+	sed -i 's|#telegram||g' $NGINX_TEMPLATE
+	ENV_OK=1
+fi
+
 if [ $ENV_OK -eq 1 ]; then
-    envsubst < $NGINX_TEMPLATE > $NGINX_CONF
+    DOLLAR='$' envsubst < $NGINX_TEMPLATE > $NGINX_CONF
 else
 	echo "Start local server."
 fi
